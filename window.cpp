@@ -8,7 +8,7 @@ int main()
     //constants
     const int windowWidth = 1000;
     const int windowHeight = 1000; //config?
-    const int cellSize = 50;
+    const int cellSize = 100;
     const int screenWidth = sf::VideoMode::getDesktopMode().width - windowWidth;
     const int screenHeight = sf::VideoMode::getDesktopMode().height - windowHeight;
 
@@ -33,8 +33,20 @@ int main()
         //window.draw(shape);
         //window.draw(quad);
         //need a way to keep track of head of snake
-        for(int i = 0; i < b.getCells().size(); i++){
-           window.draw(b.getCells().at(i).getQuad());
+        for (int i = 0; i < b.getCells().size(); i++)
+        {
+            //window.draw(b.getCells().at(i)->getQuad());
+            if (b.getCells().at(i)->getCellState() == SNAKE_HEAD)
+            {
+                window.draw(b.getCells().at(i)->getQuad());
+
+                b.getCells().at(i + 1)->setCellState(SNAKE_BODY);
+                window.draw(b.getCells().at(i + 1)->getQuad());
+
+                b.getCells().at(i - 1)->setCellState(SNAKE_BODY);
+                window.draw(b.getCells().at(i - 1)->getQuad());
+
+            }
         }
         window.display();
         //if cell not empty, draw it?

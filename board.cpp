@@ -1,5 +1,4 @@
 #include "board.hpp"
-#include <SFML/Graphics.hpp> //remove after, used for colours
 
 board::board(int windowWidth, int windowHeight, int cellSize)
 {
@@ -8,30 +7,33 @@ board::board(int windowWidth, int windowHeight, int cellSize)
     const int halfWidth = (windowWidth / cellSize) / 2;
     const int halfHeight = (windowHeight / cellSize) / 2;
 
+    //cell cellArray[windowWidth / cellSize][windowHeight / cellSize];
+
     for (int i = 0, w = 0; i < windowWidth; i += cellSize, w++)
     {
         for (int j = 0, h = 0; j < windowHeight; j += cellSize, h++)
         {
-            cell c = cell(sf::Vector2f(i, j), sf::Vector2f(i + cellSize, j), sf::Vector2f(i + cellSize, j + cellSize), sf::Vector2f(i, j + cellSize));
+            std::shared_ptr<cell> c(new cell(sf::Vector2f(i, j), sf::Vector2f(i + cellSize, j), sf::Vector2f(i + cellSize, j + cellSize), sf::Vector2f(i, j + cellSize)));
             //
             if (black)
             {
-                c.setCellState(EMPTY); //remove after, used for testing
+                c->setCellState(EMPTY); //remove after, used for testing
                 black = false;
             }
             else
             {
-                c.setCellState(FOOD);
+                c->setCellState(FOOD);
                 black = true;
             }
             ///
             //condition to set the cell to the snakehead? all other cells empty, set in cell constructor
             //need to find a central cell that works for multiple resolutions
             if(w == halfWidth && h == halfHeight){
-                c.setCellState(SNAKE_HEAD); //setting state isnt changing the colour
-                //c.setCellColour(sf::Color::Red);
+                c->setCellState(SNAKE_HEAD); //setting state isnt changing the colour
             }
             cells.push_back(c);
+            // added for multi arrays.
+           //cellArray[w][h] = cell(sf::Vector2f(i, j), sf::Vector2f(i + cellSize, j), sf::Vector2f(i + cellSize, j + cellSize), sf::Vector2f(i, j + cellSize));
         }
         black = !black; //remove after
     }
@@ -39,7 +41,7 @@ board::board(int windowWidth, int windowHeight, int cellSize)
     boardSnake = snake();
 }
 
-std::vector<cell> board::getCells()
+std::vector<std::shared_ptr<cell>> board::getCells()
 {
     return cells;
 }

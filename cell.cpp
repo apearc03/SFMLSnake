@@ -1,4 +1,5 @@
 #include "cell.hpp"
+#include "iostream"
 
 cell::cell(sf::Vector2f topLeft, sf::Vector2f topRight, sf::Vector2f bottomRight, sf::Vector2f bottomLeft)
 {
@@ -37,6 +38,10 @@ void cell::setCellColour(sf::Color colour)
     {
         quad[i].color = colour;
     }
+}
+
+CELLTYPE cell::getCellState(){
+    return state;
 }
 
 sf::VertexArray cell::getQuad()
