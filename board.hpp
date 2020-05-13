@@ -3,6 +3,7 @@
 #include "cell.hpp"
 #include "snake.hpp"
 #include <memory>
+#include <iostream>
 
 class board
 {

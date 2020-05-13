@@ -8,7 +8,8 @@ int main()
     //constants
     const int windowWidth = 1000;
     const int windowHeight = 1000; //config?
-    const int cellSize = 100;
+    const int cellSize = 25;
+    const int columnDifference = windowHeight / cellSize; //used to calculate the next horizontal cell
     const int screenWidth = sf::VideoMode::getDesktopMode().width - windowWidth;
     const int screenHeight = sf::VideoMode::getDesktopMode().height - windowHeight;
 
@@ -16,10 +17,13 @@ int main()
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "SFML! we");
     window.setPosition(sf::Vector2i(screenWidth / 2, screenHeight / 2));
     window.setVerticalSyncEnabled(true);
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(30);
 
     board b = board(windowWidth, windowHeight, cellSize);
-
+    std::cout << b.getBoardSnake().getHeadVectorIndex();
+    b.getBoardSnake().setHeadVectorIndex(20);
+    std::cout << b.getBoardSnake().getHeadVectorIndex();
+    
     while (window.isOpen())
     {
         sf::Event event;
@@ -32,7 +36,8 @@ int main()
         window.clear();
         //window.draw(shape);
         //window.draw(quad);
-        //need a way to keep track of head of snake
+        //render single food
+        //render snake
         for (int i = 0; i < b.getCells().size(); i++)
         {
             //window.draw(b.getCells().at(i)->getQuad());
@@ -46,6 +51,11 @@ int main()
                 b.getCells().at(i - 1)->setCellState(SNAKE_BODY);
                 window.draw(b.getCells().at(i - 1)->getQuad());
 
+                b.getCells().at(i - columnDifference)->setCellState(SNAKE_BODY);
+                window.draw(b.getCells().at(i - columnDifference)->getQuad());
+
+                b.getCells().at(i + columnDifference)->setCellState(SNAKE_BODY);
+                window.draw(b.getCells().at(i + columnDifference)->getQuad());
             }
         }
         window.display();

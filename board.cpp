@@ -30,6 +30,7 @@ board::board(int windowWidth, int windowHeight, int cellSize)
             //need to find a central cell that works for multiple resolutions
             if(w == halfWidth && h == halfHeight){
                 c->setCellState(SNAKE_HEAD); //setting state isnt changing the colour
+                boardSnake = snake(cells.size());
             }
             cells.push_back(c);
             // added for multi arrays.
@@ -37,8 +38,6 @@ board::board(int windowWidth, int windowHeight, int cellSize)
         }
         black = !black; //remove after
     }
-
-    boardSnake = snake();
 }
 
 std::vector<std::shared_ptr<cell>> board::getCells()
