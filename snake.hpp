@@ -1,4 +1,5 @@
 #include "snakeDirection.hpp"
+#include "cell.hpp"
 
 class snake
 {
@@ -9,4 +10,5 @@ public:
     snake();
     int getSize();
     SNAKEDIRECTION getDirection();
+    cell getHeadPosition();
 };
