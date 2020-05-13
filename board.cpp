@@ -16,20 +16,20 @@ board::board(int windowWidth, int windowHeight, int cellSize)
             //
             if (black)
             {
-                c.setCellColour(sf::Color::Black); //remove after, used for testing
+                c.setCellState(EMPTY); //remove after, used for testing
                 black = false;
             }
             else
             {
-                c.setCellColour(sf::Color::Blue);
+                c.setCellState(FOOD);
                 black = true;
             }
             ///
             //condition to set the cell to the snakehead? all other cells empty, set in cell constructor
             //need to find a central cell that works for multiple resolutions
             if(w == halfWidth && h == halfHeight){
-                c.setCellState(SNAKE_HEAD);
-                c.setCellColour(sf::Color::Red);
+                c.setCellState(SNAKE_HEAD); //setting state isnt changing the colour
+                //c.setCellColour(sf::Color::Red);
             }
             cells.push_back(c);
         }

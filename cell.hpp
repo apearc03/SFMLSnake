@@ -11,11 +11,11 @@ private:
     sf::Vector2f topR;
     sf::Vector2f botR;
     sf::Vector2f botL;
+    void setCellColour(sf::Color colour);
 
 public:
     cell(sf::Vector2f topLeft, sf::Vector2f topRight, sf::Vector2f bottomRight, sf::Vector2f bottomLeft);
     void setCellState(CELLTYPE cellType);
-    void setCellColour(sf::Color colour);
     CELLTYPE getCellState();
     sf::VertexArray getQuad();
     sf::Vector2f getTopL();

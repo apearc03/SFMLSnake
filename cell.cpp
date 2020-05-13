@@ -13,16 +13,21 @@ cell::cell(sf::Vector2f topLeft, sf::Vector2f topRight, sf::Vector2f bottomRight
 //only call this if the cell state actually needs to change
 void cell::setCellState(CELLTYPE cellType)
 {
+    state = cellType;
     switch (cellType)
     {
     case EMPTY:
-        setCellColour(sf::Color::Transparent);
-    case SNAKE_HEAD:
         setCellColour(sf::Color::Blue);
+        break;
+    case SNAKE_HEAD:
+        setCellColour(sf::Color::Red);
+        break;
     case SNAKE_BODY:
         setCellColour(sf::Color::Green);
+        break;
     case FOOD:
-        setCellColour(sf::Color::White);
+        setCellColour(sf::Color::Black);
+        break;
     }
 }
 
