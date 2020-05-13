@@ -20,10 +20,10 @@ int main()
     window.setFramerateLimit(30);
 
     board b = board(windowWidth, windowHeight, cellSize);
-    std::cout << b.getBoardSnake().getHeadVectorIndex();
-    b.getBoardSnake().setHeadVectorIndex(20);
-    std::cout << b.getBoardSnake().getHeadVectorIndex();
-    
+    std::cout << b.getBoardSnake()->getHeadVectorIndex();
+    b.getBoardSnake()->setHeadVectorIndex(20);
+    std::cout << b.getBoardSnake()->getHeadVectorIndex();
+
     while (window.isOpen())
     {
         sf::Event event;
