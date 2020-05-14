@@ -25,25 +25,34 @@ int main()
             }
         }
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        {
+            window.close();
+        }
+
         int snakeIndex = b.getBoardSnake()->getHeadVectorIndex();
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
         {
+            //if it's a top row cell. Go to appropriate bottom row cell.
             updateHeadIndex(snakeIndex, snakeIndex - 1);
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
         {
+            //if it's a left column cell. Go to appropriate right column cell.
             updateHeadIndex(snakeIndex, snakeIndex - columnCount);
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
         {
+            //if it's a bottom row cell. Go to appropriate top row cell.
             updateHeadIndex(snakeIndex, snakeIndex + 1);
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         {
+            //if it's a right column cell. Go to appropriate left column cell.
             updateHeadIndex(snakeIndex, snakeIndex + columnCount);
         }
 
