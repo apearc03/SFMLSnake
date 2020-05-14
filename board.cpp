@@ -40,10 +40,6 @@ void board::spawnFood()
 {
 }
 
-void board::moveSnake()
-{
-}
-
 std::shared_ptr<snake> board::getBoardSnake()
 {
     return boardSnake;

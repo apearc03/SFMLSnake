@@ -14,6 +14,5 @@ class board
         board(int windowWidth, int windowHeight, int cellSize); //initialize cells inside board constructor
         std::vector<std::shared_ptr<cell>> getCells();
         void spawnFood();
-        void moveSnake();
         std::shared_ptr<snake> getBoardSnake();
 };
