@@ -1,11 +1,18 @@
 #include <iostream> //for testing with cout
 #include "window.hpp"
 
+void updateHeadIndex(int oldIndex, int newIndex)
+{
+    b.getCells().at(oldIndex)->setCellState(EMPTY);
+    b.getCells().at(newIndex)->setCellState(SNAKE_HEAD);
+    b.getBoardSnake()->setHeadVectorIndex(newIndex);
+}
+
 int main()
 {
     window.setPosition(sf::Vector2i(screenWidth / 2, screenHeight / 2));
     window.setVerticalSyncEnabled(true);
-    window.setFramerateLimit(30);
+    window.setFramerateLimit(45);
 
     while (window.isOpen())
     {
@@ -22,36 +29,34 @@ int main()
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            b.getCells().at(snakeIndex)->setCellState(EMPTY);
-            b.getCells().at(snakeIndex - 1)->setCellState(SNAKE_HEAD);
-            b.getBoardSnake()->setHeadVectorIndex(snakeIndex - 1);
+            updateHeadIndex(snakeIndex, snakeIndex - 1);
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
-            b.getCells().at(snakeIndex)->setCellState(EMPTY);
-            b.getCells().at(snakeIndex - columnDifference)->setCellState(SNAKE_HEAD);
-            b.getBoardSnake()->setHeadVectorIndex(snakeIndex - columnDifference);
+            updateHeadIndex(snakeIndex, snakeIndex - columnCount);
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
-            b.getCells().at(snakeIndex)->setCellState(EMPTY);
-            b.getCells().at(snakeIndex + 1)->setCellState(SNAKE_HEAD);
-            b.getBoardSnake()->setHeadVectorIndex(snakeIndex + 1);
+            updateHeadIndex(snakeIndex, snakeIndex + 1);
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
-            b.getCells().at(snakeIndex)->setCellState(EMPTY);
-            b.getCells().at(snakeIndex + columnDifference)->setCellState(SNAKE_HEAD);
-            b.getBoardSnake()->setHeadVectorIndex(snakeIndex + columnDifference);
+            updateHeadIndex(snakeIndex, snakeIndex + columnCount);
         }
+
+        //top row, columnCount * 0    up to      columnCount * (rowCount - 1)
+        //bottom row, columnCount*1 - 1     up to    columnCount*rowCount -1
+        //left column, 0      up to      columnCount-1
+        //right column, columnCount * (rowCount - 1) + 0  up to  columnCount * (rowCount - 1)+columnCount-1
 
         //handl
         window.clear();
         //render single food
         //render snake
+        window.draw(b.getCells().at(columnCount * (rowCount - 1)+columnCount-1)->getQuad());
         window.draw(b.getCells().at(b.getBoardSnake()->getHeadVectorIndex())->getQuad());
         // for (int i = 0; i < b.getCells().size(); i++)
         // {
@@ -78,8 +83,4 @@ int main()
     }
 
     return 0;
-}
-
-void headVectorIndex(int oldIndex, int newIndex)
-{
 }

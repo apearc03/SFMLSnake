@@ -2,7 +2,6 @@
 
 board::board(int windowWidth, int windowHeight, int cellSize)
 {
-    bool black = true; //remove after
 
     const int halfWidth = (windowWidth / cellSize) / 2;
     const int halfHeight = (windowHeight / cellSize) / 2;
@@ -15,28 +14,20 @@ board::board(int windowWidth, int windowHeight, int cellSize)
         {
             std::shared_ptr<cell> c(new cell(sf::Vector2f(i, j), sf::Vector2f(i + cellSize, j), sf::Vector2f(i + cellSize, j + cellSize), sf::Vector2f(i, j + cellSize)));
             //
-            if (black)
-            {
-                c->setCellState(EMPTY); //remove after, used for testing
-                black = false;
-            }
-            else
-            {
-                c->setCellState(FOOD);
-                black = true;
-            }
+            c->setCellState(EMPTY); //remove after, used for testing
+
             ///
             //condition to set the cell to the snakehead? all other cells empty, set in cell constructor
             //need to find a central cell that works for multiple resolutions
-            if(w == halfWidth && h == halfHeight){
+            if (w == halfWidth && h == halfHeight)
+            {
                 c->setCellState(SNAKE_HEAD); //setting state isnt changing the colour
                 boardSnake.reset(new snake(cells.size()));
             }
             cells.push_back(c);
             // added for multi arrays.
-           //cellArray[w][h] = cell(sf::Vector2f(i, j), sf::Vector2f(i + cellSize, j), sf::Vector2f(i + cellSize, j + cellSize), sf::Vector2f(i, j + cellSize));
+            //cellArray[w][h] = cell(sf::Vector2f(i, j), sf::Vector2f(i + cellSize, j), sf::Vector2f(i + cellSize, j + cellSize), sf::Vector2f(i, j + cellSize));
         }
-        black = !black; //remove after
     }
 }
 
@@ -53,6 +44,7 @@ void board::moveSnake()
 {
 }
 
-std::shared_ptr<snake> board::getBoardSnake(){
+std::shared_ptr<snake> board::getBoardSnake()
+{
     return boardSnake;
 }
