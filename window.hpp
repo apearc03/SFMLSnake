@@ -9,6 +9,10 @@ const int columnCount = windowHeight / cellSize; //used to calculate the next ho
 const int rowCount = windowWidth / cellSize;
 const int screenWidth = sf::VideoMode::getDesktopMode().width - windowWidth;
 const int screenHeight = sf::VideoMode::getDesktopMode().height - windowHeight;
+int topRow[rowCount];
+int bottomRow[rowCount];
+int leftCol[rowCount];
+int rightCol[rowCount];
 
 sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "SFML! we");
 board b = board(windowWidth, windowHeight, cellSize);
