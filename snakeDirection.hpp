@@ -1,7 +1,9 @@
+#pragma once
 enum SNAKEDIRECTION
 {
     UP,
     DOWN,
     LEFT,
-    RIGHT
+    RIGHT,
+    STILL
 };

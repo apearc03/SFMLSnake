@@ -3,6 +3,7 @@
 snake::snake(int headStartIndex){
     size = 1;
     headVectorIndex = headStartIndex;
+    direction = STILL;
 }
 
 snake::snake(){
@@ -15,6 +16,10 @@ int snake::getSize(){
 
 SNAKEDIRECTION snake::getDirection(){
     return direction;
+}
+
+void snake::setDirection(SNAKEDIRECTION newDirection){
+    direction = newDirection;
 }
 
 void snake::setHeadVectorIndex(int newHeadIndex){

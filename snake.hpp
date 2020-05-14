@@ -15,4 +15,5 @@ public:
     void setHeadVectorIndex(int newHeadIndex);
     int getHeadVectorIndex();
     SNAKEDIRECTION getDirection();
+    void setDirection(SNAKEDIRECTION newDirection);
 };

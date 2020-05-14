@@ -35,7 +35,7 @@ int main()
 {
     window.setPosition(sf::Vector2i(screenWidth / 2, screenHeight / 2));
     window.setVerticalSyncEnabled(true);
-    window.setFramerateLimit(45);
+    window.setFramerateLimit(25);
 
     initEdgeCells();
 
@@ -55,9 +55,27 @@ int main()
             window.close();
         }
 
+        SNAKEDIRECTION direction = b.getBoardSnake()->getDirection();
         int snakeIndex = b.getBoardSnake()->getHeadVectorIndex();
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        {
+            b.getBoardSnake()->setDirection(UP);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        {
+            b.getBoardSnake()->setDirection(DOWN);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        {
+            b.getBoardSnake()->setDirection(LEFT);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        {
+            b.getBoardSnake()->setDirection(RIGHT);
+        }
+
+        if (direction == UP)
         {
             bool edgeCell = false;
             for (int i = 0; i < rowCount; i++)
@@ -76,7 +94,7 @@ int main()
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        if (direction == DOWN)
         {
             bool edgeCell = false;
             for (int i = 0; i < rowCount; i++)
@@ -94,10 +112,10 @@ int main()
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        if (direction == LEFT)
         {
             bool edgeCell = false;
-            for (int i = 0; i < rowCount; i++)
+            for (int i = 0; i < columnCount; i++)
             {
                 if (snakeIndex == leftCol[i])
                 {
@@ -112,10 +130,10 @@ int main()
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        if (direction == RIGHT)
         {
             bool edgeCell = false;
-            for (int i = 0; i < rowCount; i++)
+            for (int i = 0; i < columnCount; i++)
             {
                 if (snakeIndex == rightCol[i])
                 {
