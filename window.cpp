@@ -14,6 +14,39 @@ int main()
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(45);
 
+    int topRow[rowCount];
+
+    for (int i = 0; i < rowCount; i++)
+    {
+        topRow[i] = columnCount * i;
+    }
+
+    int bottomRow[rowCount];
+
+    for (int j = 1; j < rowCount + 1; j++)
+    {
+        bottomRow[j - 1] = columnCount * j - 1;
+    }
+
+    int leftCol[rowCount];
+
+    for (int k = 0; k < columnCount; k++)
+    {
+        leftCol[k] = k;
+    }
+
+    int rightCol[rowCount];
+
+    for (int l = 0; l < columnCount; l++)
+    {
+        rightCol[l] = columnCount * (rowCount - 1) + l;
+    }
+
+    //top row, columnCount * 0    up to      columnCount * (rowCount - 1)
+    //bottom row, columnCount*1 - 1     up to    columnCount*rowCount -1
+    //left column, 0      up to      columnCount-1
+    //right column, columnCount * (rowCount - 1) + 0  up to  columnCount * (rowCount - 1)+columnCount-1
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -56,16 +89,31 @@ int main()
             updateHeadIndex(snakeIndex, snakeIndex + columnCount);
         }
 
-        //top row, columnCount * 0    up to      columnCount * (rowCount - 1)
-        //bottom row, columnCount*1 - 1     up to    columnCount*rowCount -1
-        //left column, 0      up to      columnCount-1
-        //right column, columnCount * (rowCount - 1) + 0  up to  columnCount * (rowCount - 1)+columnCount-1
-
         //handl
         window.clear();
         //render single food
         //render snake
-        window.draw(b.getCells().at(columnCount * (rowCount - 1)+columnCount-1)->getQuad());
+
+        for (int i = 0; i < rowCount; i++)
+        {
+            window.draw(b.getCells().at(topRow[i])->getQuad());
+        }
+
+        for (int j = 0; j < rowCount; j++)
+        {
+            window.draw(b.getCells().at(bottomRow[j])->getQuad());
+        }
+
+        for (int k = 0; k < columnCount; k++)
+        {
+            window.draw(b.getCells().at(leftCol[k])->getQuad());
+        }
+
+        for (int l = 0; l < columnCount; l++)
+        {
+            window.draw(b.getCells().at(rightCol[l])->getQuad());
+        }
+
         window.draw(b.getCells().at(b.getBoardSnake()->getHeadVectorIndex())->getQuad());
         // for (int i = 0; i < b.getCells().size(); i++)
         // {
