@@ -58,19 +58,19 @@ int main()
         SNAKEDIRECTION direction = b.getBoardSnake()->getDirection();
         int snakeIndex = b.getBoardSnake()->getHeadVectorIndex();
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && direction != DOWN)
         {
             b.getBoardSnake()->setDirection(UP);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) && direction != UP)
         {
             b.getBoardSnake()->setDirection(DOWN);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) && direction != RIGHT)
         {
             b.getBoardSnake()->setDirection(LEFT);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) && direction != LEFT)
         {
             b.getBoardSnake()->setDirection(RIGHT);
         }
@@ -86,8 +86,6 @@ int main()
                     edgeCell = true;
                 }
             }
-            //if it's a top row cell. Go to appropriate bottom row cell.
-            //if current index is in top row. Go to equivalent bottom row.
             if (!edgeCell)
             {
                 updateHeadIndex(snakeIndex, snakeIndex - 1);
@@ -105,7 +103,6 @@ int main()
                     edgeCell = true;
                 }
             }
-            //if it's a bottom row cell. Go to appropriate top row cell.
             if (!edgeCell)
             {
                 updateHeadIndex(snakeIndex, snakeIndex + 1);
@@ -123,7 +120,6 @@ int main()
                     edgeCell = true;
                 }
             }
-            //if it's a left column cell. Go to appropriate right column cell.
             if (!edgeCell)
             {
                 updateHeadIndex(snakeIndex, snakeIndex - columnCount);
@@ -141,7 +137,6 @@ int main()
                     edgeCell = true;
                 }
             }
-            //if it's a right column cell. Go to appropriate left column cell.
             if (!edgeCell)
             {
                 updateHeadIndex(snakeIndex, snakeIndex + columnCount);
