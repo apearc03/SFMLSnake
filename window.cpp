@@ -1,25 +1,11 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
 #include <iostream> //for testing with cout
-#include "board.hpp"
+#include "window.hpp"
 
 int main()
 {
-    //constants
-    const int windowWidth = 1000;
-    const int windowHeight = 1000; //config?
-    const int cellSize = 50;
-    const int columnDifference = windowHeight / cellSize; //used to calculate the next horizontal cell
-    const int screenWidth = sf::VideoMode::getDesktopMode().width - windowWidth;
-    const int screenHeight = sf::VideoMode::getDesktopMode().height - windowHeight;
-
-    //setup window
-    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "SFML! we");
     window.setPosition(sf::Vector2i(screenWidth / 2, screenHeight / 2));
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(30);
-
-    board b = board(windowWidth, windowHeight, cellSize);
 
     while (window.isOpen())
     {
@@ -94,6 +80,6 @@ int main()
     return 0;
 }
 
-void headVectorIndex(int oldIndex, int newIndex){
-
+void headVectorIndex(int oldIndex, int newIndex)
+{
 }
