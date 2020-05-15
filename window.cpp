@@ -39,6 +39,8 @@ int main()
 
     initEdgeCells();
 
+    b.spawnFood();
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -147,7 +149,7 @@ int main()
         window.clear();
         //render single food
         //render snake
-
+        window.draw(b.getCells().at(b.getCurrentFoodIndex())->getQuad());
         window.draw(b.getCells().at(b.getBoardSnake()->getHeadVectorIndex())->getQuad());
         window.display();
         //if cell not empty, draw it?

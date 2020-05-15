@@ -7,10 +7,6 @@ class cell
 private:
     sf::VertexArray quad;
     CELLTYPE state;
-    sf::Vector2f topL; //possibly remove these if unused
-    sf::Vector2f topR;
-    sf::Vector2f botR;
-    sf::Vector2f botL;
     void setCellColour(sf::Color colour);
 
 public:
@@ -18,8 +14,4 @@ public:
     void setCellState(CELLTYPE cellType);
     CELLTYPE getCellState();
     sf::VertexArray getQuad();
-    sf::Vector2f getTopL();
-    sf::Vector2f getTopR();
-    sf::Vector2f getBotR();
-    sf::Vector2f getBotL();
 };

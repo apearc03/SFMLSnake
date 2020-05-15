@@ -27,7 +27,7 @@ void cell::setCellState(CELLTYPE cellType)
         setCellColour(sf::Color::Green);
         break;
     case FOOD:
-        setCellColour(sf::Color::Black);
+        setCellColour(sf::Color::Yellow);
         break;
     }
 }
@@ -48,20 +48,3 @@ sf::VertexArray cell::getQuad()
 {
     return quad;
 };
-
-sf::Vector2f cell::getTopL()
-{
-    return topL;
-}
-sf::Vector2f cell::getTopR()
-{
-    return topR;
-}
-sf::Vector2f cell::getBotR()
-{
-    return botR;
-}
-sf::Vector2f cell::getBotL()
-{
-    return botL;
-}

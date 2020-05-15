@@ -7,7 +7,6 @@ board::board(int windowWidth, int windowHeight, int cellSize)
     const int halfHeight = (windowHeight / cellSize) / 2;
 
     //cell cellArray[windowWidth / cellSize][windowHeight / cellSize];
-
     for (int i = 0, w = 0; i < windowWidth; i += cellSize, w++)
     {
         for (int j = 0, h = 0; j < windowHeight; j += cellSize, h++)
@@ -36,8 +35,28 @@ std::vector<std::shared_ptr<cell>> board::getCells()
     return cells;
 }
 
+int board::getCurrentFoodIndex(){
+    return currentFoodIndex;
+}
+
 void board::spawnFood()
 {
+    std::vector<int> possibleCells;
+    for(int i = 0 ; i < cells.size() ; i++){
+            //loop through all cells and add to possibleCells if the cell index doesnt contain snake head or body.
+            if(cells.at(i)->getCellState() != SNAKE_HEAD && cells.at(i)->getCellState() != SNAKE_BODY){
+                possibleCells.push_back(i);
+            }
+    }
+    srand(time(NULL));
+    int randomPossibleIndex = rand() % possibleCells.size();
+    int newFoodIndex = possibleCells.at(randomPossibleIndex);
+    cells.at(newFoodIndex)->setCellState(FOOD);
+    currentFoodIndex = newFoodIndex;
+}
+
+void board::foodEaten(){
+
 }
 
 std::shared_ptr<snake> board::getBoardSnake()
