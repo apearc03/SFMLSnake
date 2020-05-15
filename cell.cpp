@@ -18,7 +18,7 @@ void cell::setCellState(CELLTYPE cellType)
     switch (cellType)
     {
     case EMPTY:
-        setCellColour(sf::Color::Blue);
+        setCellColour(sf::Color::Transparent);
         break;
     case SNAKE_HEAD:
         setCellColour(sf::Color::Red);

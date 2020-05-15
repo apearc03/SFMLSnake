@@ -35,7 +35,7 @@ int main()
 {
     window.setPosition(sf::Vector2i(screenWidth / 2, screenHeight / 2));
     window.setVerticalSyncEnabled(true);
-    window.setFramerateLimit(25);
+    window.setFramerateLimit(10);
 
     initEdgeCells();
 
@@ -143,6 +143,11 @@ int main()
             {
                 updateHeadIndex(snakeIndex, snakeIndex + columnCount);
             }
+        }
+
+        if(b.getBoardSnake()->getHeadVectorIndex() == b.getCurrentFoodIndex()){
+            b.foodEaten();
+            b.spawnFood();
         }
 
         //handl

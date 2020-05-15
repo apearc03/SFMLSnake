@@ -35,18 +35,21 @@ std::vector<std::shared_ptr<cell>> board::getCells()
     return cells;
 }
 
-int board::getCurrentFoodIndex(){
+int board::getCurrentFoodIndex()
+{
     return currentFoodIndex;
 }
 
 void board::spawnFood()
 {
     std::vector<int> possibleCells;
-    for(int i = 0 ; i < cells.size() ; i++){
-            //loop through all cells and add to possibleCells if the cell index doesnt contain snake head or body.
-            if(cells.at(i)->getCellState() != SNAKE_HEAD && cells.at(i)->getCellState() != SNAKE_BODY){
-                possibleCells.push_back(i);
-            }
+    for (int i = 0; i < cells.size(); i++)
+    {
+        //loop through all cells and add to possibleCells if the cell index doesnt contain snake head or body.
+        if (cells.at(i)->getCellState() != SNAKE_HEAD && cells.at(i)->getCellState() != SNAKE_BODY)
+        {
+            possibleCells.push_back(i);
+        }
     }
     srand(time(NULL));
     int randomPossibleIndex = rand() % possibleCells.size();
@@ -55,11 +58,17 @@ void board::spawnFood()
     currentFoodIndex = newFoodIndex;
 }
 
-void board::foodEaten(){
-
+void board::foodEaten()
+{
+    score++;
+    cells.at(currentFoodIndex)->setCellState(EMPTY);
 }
 
 std::shared_ptr<snake> board::getBoardSnake()
 {
     return boardSnake;
 }
+
+int board::getScore(){
+    return score;
+};
