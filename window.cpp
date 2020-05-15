@@ -35,7 +35,7 @@ int main()
 {
     window.setPosition(sf::Vector2i(screenWidth / 2, screenHeight / 2));
     window.setVerticalSyncEnabled(true);
-    window.setFramerateLimit(10);
+    window.setFramerateLimit(20);
 
     initEdgeCells();
 
@@ -50,6 +50,11 @@ int main()
             {
                 window.close();
             }
+        }
+
+        if(b.getBoardSnake()->getHeadVectorIndex() == b.getCurrentFoodIndex()){
+            b.foodEaten();
+            b.spawnFood();
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
@@ -145,11 +150,6 @@ int main()
             }
         }
 
-        if(b.getBoardSnake()->getHeadVectorIndex() == b.getCurrentFoodIndex()){
-            b.foodEaten();
-            b.spawnFood();
-        }
-
         //handl
         window.clear();
         //render single food
@@ -158,6 +158,7 @@ int main()
         window.draw(b.getCells().at(b.getBoardSnake()->getHeadVectorIndex())->getQuad());
         window.display();
         //if cell not empty, draw it?
+        
     }
 
     return 0;

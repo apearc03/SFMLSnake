@@ -5,7 +5,7 @@
 
 const int windowWidth = 1000;
 const int windowHeight = 1000; //config? Probably not, just set to reasonable values
-const int cellSize = 50;
+const int cellSize = 20;
 const int columnCount = windowHeight / cellSize; //used to calculate the next horizontal cell
 const int rowCount = windowWidth / cellSize;
 const int screenWidth = sf::VideoMode::getDesktopMode().width - windowWidth;
@@ -15,5 +15,5 @@ int bottomRow[rowCount];
 int leftCol[rowCount];
 int rightCol[rowCount];
 
-sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "SFML! we");
+sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Snake");
 board b = board(windowWidth, windowHeight, cellSize);
