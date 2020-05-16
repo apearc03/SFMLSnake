@@ -35,7 +35,7 @@ int main()
 {
     window.setPosition(sf::Vector2i(screenWidth / 2, screenHeight / 2));
     window.setVerticalSyncEnabled(true);
-    window.setFramerateLimit(20);
+    window.setFramerateLimit(30);
 
     initEdgeCells();
 

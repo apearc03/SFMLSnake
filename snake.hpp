@@ -6,7 +6,7 @@ class snake
 {
 private:
     int size;
-    int headVectorIndex;
+    int headVectorIndex; //possible change this to a vector that contains all snake indexes? 1st index is always the head.
     SNAKEDIRECTION direction;
 public:
     snake(int headStartIndex);
