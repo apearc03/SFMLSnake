@@ -51,7 +51,6 @@ void board::spawnFood()
             possibleCells.push_back(i);
         }
     }
-    srand(time(NULL));
     int randomPossibleIndex = rand() % possibleCells.size();
     int newFoodIndex = possibleCells.at(randomPossibleIndex);
     cells.at(newFoodIndex)->setCellState(FOOD);

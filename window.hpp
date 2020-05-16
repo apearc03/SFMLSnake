@@ -5,7 +5,7 @@
 
 const int windowWidth = 1000;
 const int windowHeight = 1000; //config? Probably not, just set to reasonable values
-const int cellSize = 10;
+const int cellSize = 100;
 const int columnCount = windowHeight / cellSize; //used to calculate the next horizontal cell
 const int rowCount = windowWidth / cellSize;
 const int screenWidth = sf::VideoMode::getDesktopMode().width - windowWidth;
