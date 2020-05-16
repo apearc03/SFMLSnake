@@ -40,6 +40,8 @@ int main()
     srand(time(0));
     initEdgeCells();
     b.spawnFood();
+    //b.getBoardSnake()->getSnakeIndices()->emplace_back(22);
+    b.getBoardSnake()->getSnakeIndices()->at(0) = 22;
 
     while (window.isOpen())
     {
@@ -156,6 +158,10 @@ int main()
         //render snake
         window.draw(b.getCells().at(b.getCurrentFoodIndex())->getQuad());
         window.draw(b.getCells().at(b.getBoardSnake()->getHeadVectorIndex())->getQuad());
+        for(int s : *b.getBoardSnake()->getSnakeIndices()){
+            std::cout << s;
+            std::cout << "\n";
+        }
         window.display();
         //if cell not empty, draw it?
         

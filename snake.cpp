@@ -3,6 +3,7 @@
 snake::snake(int headStartIndex){
     size = 1;
     headVectorIndex = headStartIndex;
+    snakeIndices->push_back(headStartIndex);
     direction = STILL;
 }
 
@@ -28,4 +29,8 @@ void snake::setHeadVectorIndex(int newHeadIndex){
 
 int snake::getHeadVectorIndex(){
     return headVectorIndex;
+}
+
+std::shared_ptr<std::vector<int>> snake::getSnakeIndices(){
+    return snakeIndices;
 }
