@@ -8,10 +8,9 @@ std::shared_ptr<std::vector<std::shared_ptr<snakeIndex>>> snake::getSnakeIndices
     return snakeIndices;
 }
 
-void snake::growSnake(){
-    //find the last index in the snake.
-    //direction wont be the same as the head either.
-    //each index needs a direction?
+void snake::growSnake(int index, SNAKEDIRECTION direction){
+    snakeIndices->push_back(std::make_shared<snakeIndex>(index, direction));
+    //direction passed in will the same as the previous last index. can determine index from that.
 }
 
 std::shared_ptr<snakeIndex> snake::getHeadIndex(){

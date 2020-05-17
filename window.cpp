@@ -1,8 +1,48 @@
 #include <iostream> //for testing with cout
 #include "window.hpp"
 
-void updateHeadIndex(int oldIndex, int newIndex)
+void updateHeadIndex(int oldIndex, int newIndex) //needs changing, old index will be the next segment of snake.
 {
+    //This loops from tail through entire body excluding head. Might need to adjust head separately.
+    for (auto i = b.getBoardSnake()->getSnakeIndices()->rbegin();
+         i != b.getBoardSnake()->getSnakeIndices()->rend(); ++i)
+    {
+         if (i == b.getBoardSnake()->getSnakeIndices()->rbegin() && b.getBoardSnake()->getSnakeIndices()->size() == 1)
+        {
+            //end of snake.
+            std::cout << "Snake only has one piece";
+            std::cout << i->get()->getIndex();
+            std::cout << "\n";
+            //set new position to new index
+            //set old cell state to EMPTY
+        }
+        else if (i == b.getBoardSnake()->getSnakeIndices()->rbegin())
+        {
+            //end of snake with more than 1 piece.
+            std::cout << "End of snake with more than 1 piece";
+            std::cout << i->get()->getIndex();
+            std::cout << "\n";
+            //set position to next in line. (i+1)
+            //set old cell state to EMPTY
+        }
+        else if (i == b.getBoardSnake()->getSnakeIndices()->rend() - 1)
+        {
+            //start of snake.
+            std::cout << "Start of snake";
+            std::cout << i->get()->getIndex();
+            std::cout << "\n";
+            //set position to new index
+        }
+        else
+        {
+            //middle segment
+            std::cout << "Middle segment";
+            std::cout << i->get()->getIndex();
+            std::cout << "\n";
+            //set position to next in line. (i+1)
+        }
+    }
+    std::cout << "end of loop \n";
     b.getCells().at(oldIndex)->setCellState(EMPTY);
     b.getCells().at(newIndex)->setCellState(SNAKE_HEAD);
     b.getBoardSnake()->getHeadIndex()->setIndex(newIndex);
@@ -52,12 +92,16 @@ int main()
             }
         }
 
-        if(foodWasEaten){
+        if (foodWasEaten)
+        {
             b.spawnFood();
             foodWasEaten = false;
         }
-        if(b.getBoardSnake()->getHeadIndex()->getIndex() == b.getCurrentFoodIndex()){
+        if (b.getBoardSnake()->getHeadIndex()->getIndex() == b.getCurrentFoodIndex())
+        {
             b.foodEaten();
+            b.getBoardSnake()->growSnake(55, STILL);
+            b.getCells().at(55)->setCellState(SNAKE_HEAD);
             foodWasEaten = true;
         }
 
@@ -159,15 +203,15 @@ int main()
         //render single food
         //render snake
         //window.draw(b.getCells().at(b.getBoardSnake()->getHeadVectorIndex())->getQuad());
-        for(std::shared_ptr<snakeIndex> s : *b.getBoardSnake()->getSnakeIndices()){
+        for (std::shared_ptr<snakeIndex> s : *b.getBoardSnake()->getSnakeIndices())
+        {
             window.draw(b.getCells().at(s->getIndex())->getQuad());
-            std::cout << b.getCurrentFoodIndex();
-            std::cout << "\n";
+            //std::cout << b.getCurrentFoodIndex();
+            //std::cout << "\n";
         }
         window.draw(b.getCells().at(b.getCurrentFoodIndex())->getQuad());
         window.display();
         //if cell not empty, draw it?
-        
     }
 
     return 0;

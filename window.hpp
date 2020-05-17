@@ -2,6 +2,7 @@
 #include <SFML/Window.hpp>
 #include "board.hpp"
 #include "snakeDirection.hpp"
+#include <vector>
 
 const int windowWidth = 1000;
 const int windowHeight = 1000; //config? Probably not, just set to reasonable values

@@ -13,5 +13,5 @@ public:
     snake();
     std::shared_ptr<std::vector<std::shared_ptr<snakeIndex>>> getSnakeIndices();
     std::shared_ptr<snakeIndex> getHeadIndex();
-    void growSnake();
+    void growSnake(int index, SNAKEDIRECTION direction);
 };
