@@ -1,51 +1,47 @@
 #include <iostream> //for testing with cout
 #include "window.hpp"
 
-void updateHeadIndex(int oldIndex, int newIndex) //needs changing, old index will be the next segment of snake.
+void updateHeadIndex(int newHeadIndex) //needs changing, old index will be the next segment of snake.
 {
     //This loops from tail through entire body excluding head. Might need to adjust head separately.
     for (auto i = b.getBoardSnake()->getSnakeIndices()->rbegin();
          i != b.getBoardSnake()->getSnakeIndices()->rend(); ++i)
     {
-         if (i == b.getBoardSnake()->getSnakeIndices()->rbegin() && b.getBoardSnake()->getSnakeIndices()->size() == 1)
+        if (i == b.getBoardSnake()->getSnakeIndices()->rbegin() && b.getBoardSnake()->getSnakeIndices()->size() == 1)
         {
             //end of snake.
-            std::cout << "Snake only has one piece";
-            std::cout << i->get()->getIndex();
-            std::cout << "\n";
+            int oldHeadIndex = b.getBoardSnake()->getHeadIndex()->getIndex();
+            // b.getCells().at(oldHeadIndex)->setCellState(EMPTY);
+            b.getCells().at(newHeadIndex)->setCellState(SNAKE_HEAD);
+            b.getBoardSnake()->getHeadIndex()->setIndex(newHeadIndex);
             //set new position to new index
             //set old cell state to EMPTY
         }
         else if (i == b.getBoardSnake()->getSnakeIndices()->rbegin())
         {
             //end of snake with more than 1 piece.
-            std::cout << "End of snake with more than 1 piece";
-            std::cout << i->get()->getIndex();
-            std::cout << "\n";
+            int nextIndex = (i + 1)->get()->getIndex();
+            i->get()->setIndex(nextIndex);
             //set position to next in line. (i+1)
             //set old cell state to EMPTY
         }
         else if (i == b.getBoardSnake()->getSnakeIndices()->rend() - 1)
         {
             //start of snake.
-            std::cout << "Start of snake";
-            std::cout << i->get()->getIndex();
-            std::cout << "\n";
+            b.getCells().at(newHeadIndex)->setCellState(SNAKE_HEAD);
+            b.getBoardSnake()->getHeadIndex()->setIndex(newHeadIndex);
             //set position to new index
         }
         else
         {
             //middle segment
-            std::cout << "Middle segment";
-            std::cout << i->get()->getIndex();
-            std::cout << "\n";
+            int nextIndex = (i + 1)->get()->getIndex();
+            i->get()->setIndex(nextIndex);
             //set position to next in line. (i+1)
         }
     }
-    std::cout << "end of loop \n";
-    b.getCells().at(oldIndex)->setCellState(EMPTY);
-    b.getCells().at(newIndex)->setCellState(SNAKE_HEAD);
-    b.getBoardSnake()->getHeadIndex()->setIndex(newIndex);
+                std::cout << b.getBoardSnake()->getSnakeIndices()->size(); //crashes when snake is length 16
+                std::cout << "\n";
 }
 
 void initEdgeCells()
@@ -100,8 +96,9 @@ int main()
         if (b.getBoardSnake()->getHeadIndex()->getIndex() == b.getCurrentFoodIndex())
         {
             b.foodEaten();
-            b.getBoardSnake()->growSnake(55, STILL);
-            b.getCells().at(55)->setCellState(SNAKE_HEAD);
+            snakeIndex *last = b.getBoardSnake()->getSnakeIndices()->rbegin()->get();
+            b.getBoardSnake()->growSnake(last->getIndex(), STILL);
+            //b.getCells().at(55)->setCellState(SNAKE_HEAD);
             foodWasEaten = true;
         }
 
@@ -137,13 +134,13 @@ int main()
             {
                 if (snakeHeadIndex == topRow[i])
                 {
-                    updateHeadIndex(snakeHeadIndex, bottomRow[i]);
+                    updateHeadIndex(bottomRow[i]);
                     edgeCell = true;
                 }
             }
             if (!edgeCell)
             {
-                updateHeadIndex(snakeHeadIndex, snakeHeadIndex - 1);
+                updateHeadIndex(snakeHeadIndex - 1);
             }
         }
 
@@ -154,13 +151,13 @@ int main()
             {
                 if (snakeHeadIndex == bottomRow[i])
                 {
-                    updateHeadIndex(snakeHeadIndex, topRow[i]);
+                    updateHeadIndex(topRow[i]);
                     edgeCell = true;
                 }
             }
             if (!edgeCell)
             {
-                updateHeadIndex(snakeHeadIndex, snakeHeadIndex + 1);
+                updateHeadIndex(snakeHeadIndex + 1);
             }
         }
 
@@ -171,13 +168,13 @@ int main()
             {
                 if (snakeHeadIndex == leftCol[i])
                 {
-                    updateHeadIndex(snakeHeadIndex, rightCol[i]);
+                    updateHeadIndex(rightCol[i]);
                     edgeCell = true;
                 }
             }
             if (!edgeCell)
             {
-                updateHeadIndex(snakeHeadIndex, snakeHeadIndex - columnCount);
+                updateHeadIndex(snakeHeadIndex - columnCount);
             }
         }
 
@@ -188,13 +185,13 @@ int main()
             {
                 if (snakeHeadIndex == rightCol[i])
                 {
-                    updateHeadIndex(snakeHeadIndex, leftCol[i]);
+                    updateHeadIndex(leftCol[i]);
                     edgeCell = true;
                 }
             }
             if (!edgeCell)
             {
-                updateHeadIndex(snakeHeadIndex, snakeHeadIndex + columnCount);
+                updateHeadIndex(snakeHeadIndex + columnCount);
             }
         }
 

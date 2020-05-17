@@ -13,7 +13,7 @@ board::board(int windowWidth, int windowHeight, int cellSize)
         {
             std::shared_ptr<cell> c(new cell(sf::Vector2f(i, j), sf::Vector2f(i + cellSize, j), sf::Vector2f(i + cellSize, j + cellSize), sf::Vector2f(i, j + cellSize)));
             //
-            c->setCellState(EMPTY); //remove after, used for testing
+            //c->setCellState(EMPTY); //remove after, used for testing
 
             ///
             //condition to set the cell to the snakehead? all other cells empty, set in cell constructor
@@ -60,7 +60,6 @@ void board::spawnFood()
 void board::foodEaten()
 {
     score++;
-    cells.at(currentFoodIndex)->setCellState(EMPTY);
 }
 
 std::shared_ptr<snake> board::getBoardSnake()
