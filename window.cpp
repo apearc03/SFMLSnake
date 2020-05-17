@@ -5,7 +5,7 @@ void updateHeadIndex(int oldIndex, int newIndex)
 {
     b.getCells().at(oldIndex)->setCellState(EMPTY);
     b.getCells().at(newIndex)->setCellState(SNAKE_HEAD);
-    b.getBoardSnake()->setHeadVectorIndex(newIndex);
+    b.getBoardSnake()->getSnakeIndices()->at(0) = newIndex;
 }
 
 void initEdgeCells()
@@ -40,8 +40,6 @@ int main()
     srand(time(0));
     initEdgeCells();
     b.spawnFood();
-    //b.getBoardSnake()->getSnakeIndices()->emplace_back(22);
-    b.getBoardSnake()->getSnakeIndices()->at(0) = 22;
 
     while (window.isOpen())
     {
@@ -54,7 +52,7 @@ int main()
             }
         }
 
-        if(b.getBoardSnake()->getHeadVectorIndex() == b.getCurrentFoodIndex()){
+        if(b.getBoardSnake()->getSnakeIndices()->at(0) == b.getCurrentFoodIndex()){
             b.foodEaten();
             b.spawnFood();
         }
@@ -65,7 +63,7 @@ int main()
         }
 
         SNAKEDIRECTION direction = b.getBoardSnake()->getDirection();
-        int snakeIndex = b.getBoardSnake()->getHeadVectorIndex();
+        int snakeHeadIndex = b.getBoardSnake()->getSnakeIndices()->at(0);
 
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && direction != DOWN)
         {
@@ -89,15 +87,15 @@ int main()
             bool edgeCell = false;
             for (int i = 0; i < rowCount; i++)
             {
-                if (snakeIndex == topRow[i])
+                if (snakeHeadIndex == topRow[i])
                 {
-                    updateHeadIndex(snakeIndex, bottomRow[i]);
+                    updateHeadIndex(snakeHeadIndex, bottomRow[i]);
                     edgeCell = true;
                 }
             }
             if (!edgeCell)
             {
-                updateHeadIndex(snakeIndex, snakeIndex - 1);
+                updateHeadIndex(snakeHeadIndex, snakeHeadIndex - 1);
             }
         }
 
@@ -106,15 +104,15 @@ int main()
             bool edgeCell = false;
             for (int i = 0; i < rowCount; i++)
             {
-                if (snakeIndex == bottomRow[i])
+                if (snakeHeadIndex == bottomRow[i])
                 {
-                    updateHeadIndex(snakeIndex, topRow[i]);
+                    updateHeadIndex(snakeHeadIndex, topRow[i]);
                     edgeCell = true;
                 }
             }
             if (!edgeCell)
             {
-                updateHeadIndex(snakeIndex, snakeIndex + 1);
+                updateHeadIndex(snakeHeadIndex, snakeHeadIndex + 1);
             }
         }
 
@@ -123,15 +121,15 @@ int main()
             bool edgeCell = false;
             for (int i = 0; i < columnCount; i++)
             {
-                if (snakeIndex == leftCol[i])
+                if (snakeHeadIndex == leftCol[i])
                 {
-                    updateHeadIndex(snakeIndex, rightCol[i]);
+                    updateHeadIndex(snakeHeadIndex, rightCol[i]);
                     edgeCell = true;
                 }
             }
             if (!edgeCell)
             {
-                updateHeadIndex(snakeIndex, snakeIndex - columnCount);
+                updateHeadIndex(snakeHeadIndex, snakeHeadIndex - columnCount);
             }
         }
 
@@ -140,15 +138,15 @@ int main()
             bool edgeCell = false;
             for (int i = 0; i < columnCount; i++)
             {
-                if (snakeIndex == rightCol[i])
+                if (snakeHeadIndex == rightCol[i])
                 {
-                    updateHeadIndex(snakeIndex, leftCol[i]);
+                    updateHeadIndex(snakeHeadIndex, leftCol[i]);
                     edgeCell = true;
                 }
             }
             if (!edgeCell)
             {
-                updateHeadIndex(snakeIndex, snakeIndex + columnCount);
+                updateHeadIndex(snakeHeadIndex, snakeHeadIndex + columnCount);
             }
         }
 
@@ -157,8 +155,9 @@ int main()
         //render single food
         //render snake
         window.draw(b.getCells().at(b.getCurrentFoodIndex())->getQuad());
-        window.draw(b.getCells().at(b.getBoardSnake()->getHeadVectorIndex())->getQuad());
+        //window.draw(b.getCells().at(b.getBoardSnake()->getHeadVectorIndex())->getQuad());
         for(int s : *b.getBoardSnake()->getSnakeIndices()){
+            window.draw(b.getCells().at(s)->getQuad());
             std::cout << s;
             std::cout << "\n";
         }
