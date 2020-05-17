@@ -5,7 +5,7 @@ void updateHeadIndex(int oldIndex, int newIndex)
 {
     b.getCells().at(oldIndex)->setCellState(EMPTY);
     b.getCells().at(newIndex)->setCellState(SNAKE_HEAD);
-    b.getBoardSnake()->getSnakeIndices()->at(0) = newIndex;
+    b.getBoardSnake()->getHeadIndex()->setIndex(newIndex);
 }
 
 void initEdgeCells()
@@ -40,7 +40,7 @@ int main()
     srand(time(0));
     initEdgeCells();
     b.spawnFood();
-
+    bool foodWasEaten = false;
     while (window.isOpen())
     {
         sf::Event event;
@@ -52,9 +52,13 @@ int main()
             }
         }
 
-        if(b.getBoardSnake()->getSnakeIndices()->at(0) == b.getCurrentFoodIndex()){
-            b.foodEaten();
+        if(foodWasEaten){
             b.spawnFood();
+            foodWasEaten = false;
+        }
+        if(b.getBoardSnake()->getHeadIndex()->getIndex() == b.getCurrentFoodIndex()){
+            b.foodEaten();
+            foodWasEaten = true;
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
@@ -62,27 +66,27 @@ int main()
             window.close();
         }
 
-        SNAKEDIRECTION direction = b.getBoardSnake()->getDirection();
-        int snakeHeadIndex = b.getBoardSnake()->getSnakeIndices()->at(0);
+        SNAKEDIRECTION headDirection = b.getBoardSnake()->getHeadIndex()->getDirection(); //add method to snake to get head index
+        int snakeHeadIndex = b.getBoardSnake()->getHeadIndex()->getIndex();
 
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && direction != DOWN)
+        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && headDirection != DOWN)
         {
-            b.getBoardSnake()->setDirection(UP);
+            b.getBoardSnake()->getHeadIndex()->setDirection(UP);
         }
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) && direction != UP)
+        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) && headDirection != UP)
         {
-            b.getBoardSnake()->setDirection(DOWN);
+            b.getBoardSnake()->getHeadIndex()->setDirection(DOWN);
         }
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) && direction != RIGHT)
+        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) && headDirection != RIGHT)
         {
-            b.getBoardSnake()->setDirection(LEFT);
+            b.getBoardSnake()->getHeadIndex()->setDirection(LEFT);
         }
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) && direction != LEFT)
+        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) && headDirection != LEFT)
         {
-            b.getBoardSnake()->setDirection(RIGHT);
+            b.getBoardSnake()->getHeadIndex()->setDirection(RIGHT);
         }
 
-        if (direction == UP)
+        if (headDirection == UP)
         {
             bool edgeCell = false;
             for (int i = 0; i < rowCount; i++)
@@ -99,7 +103,7 @@ int main()
             }
         }
 
-        if (direction == DOWN)
+        if (headDirection == DOWN)
         {
             bool edgeCell = false;
             for (int i = 0; i < rowCount; i++)
@@ -116,7 +120,7 @@ int main()
             }
         }
 
-        if (direction == LEFT)
+        if (headDirection == LEFT)
         {
             bool edgeCell = false;
             for (int i = 0; i < columnCount; i++)
@@ -133,7 +137,7 @@ int main()
             }
         }
 
-        if (direction == RIGHT)
+        if (headDirection == RIGHT)
         {
             bool edgeCell = false;
             for (int i = 0; i < columnCount; i++)
@@ -154,13 +158,13 @@ int main()
         window.clear();
         //render single food
         //render snake
-        window.draw(b.getCells().at(b.getCurrentFoodIndex())->getQuad());
         //window.draw(b.getCells().at(b.getBoardSnake()->getHeadVectorIndex())->getQuad());
-        for(int s : *b.getBoardSnake()->getSnakeIndices()){
-            window.draw(b.getCells().at(s)->getQuad());
-            std::cout << s;
+        for(std::shared_ptr<snakeIndex> s : *b.getBoardSnake()->getSnakeIndices()){
+            window.draw(b.getCells().at(s->getIndex())->getQuad());
+            std::cout << b.getCurrentFoodIndex();
             std::cout << "\n";
         }
+        window.draw(b.getCells().at(b.getCurrentFoodIndex())->getQuad());
         window.display();
         //if cell not empty, draw it?
         
