@@ -187,20 +187,14 @@ int main()
             }
         }
 
-        //handl
         window.clear();
-        //render single food
-        //render snake
-        //window.draw(b.getCells().at(b.getBoardSnake()->getHeadVectorIndex())->getQuad());
+        //add game state and render different things on screen? Way to reset board, show score after game end.
         for (std::shared_ptr<snakeIndex> s : *b.getBoardSnake()->getSnakeIndices())
         {
             window.draw(b.getCells().at(s->getIndex())->getQuad());
-            //std::cout << b.getCurrentFoodIndex();
-            //std::cout << "\n";
         }
         window.draw(b.getCells().at(b.getCurrentFoodIndex())->getQuad());
         window.display();
-        //if cell not empty, draw it?
     }
 
     return 0;

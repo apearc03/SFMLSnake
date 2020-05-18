@@ -4,8 +4,8 @@
 #include "snakeDirection.hpp"
 #include <vector>
 
-const int windowWidth = 1000;
-const int windowHeight = 700; //config? Probably not, just set to reasonable values
+const int windowWidth = 700;
+const int windowHeight = 800; //config? Probably not, just set to reasonable values
 const int cellSize = 100;
 const int columnCount = windowHeight / cellSize; //used to calculate the next horizontal cell
 const int rowCount = windowWidth / cellSize;
