@@ -70,7 +70,6 @@ int main()
     initEdgeCells();
     b.spawnFood();
     bool foodWasEaten = false;
-    SNAKEDIRECTION headDirection = STILL;
     while (window.isOpen())
     {
         sf::Event event;
@@ -92,7 +91,6 @@ int main()
             b.foodEaten();
             snakeIndex *last = b.getBoardSnake()->getSnakeIndices()->rbegin()->get();
             b.getBoardSnake()->growSnake(last->getIndex(), STILL);
-            //b.getCells().at(55)->setCellState(SNAKE_HEAD);
             foodWasEaten = true;
         }
 
@@ -101,27 +99,24 @@ int main()
             window.close();
         }
 
+        SNAKEDIRECTION headDirection = b.getBoardSnake()->getHeadIndex()->getDirection();
         int snakeHeadIndex = b.getBoardSnake()->getHeadIndex()->getIndex();
 
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && headDirection != DOWN)
         {
-            //b.getBoardSnake()->getHeadIndex()->setDirection(UP);
-            headDirection = UP;
+            b.getBoardSnake()->getHeadIndex()->setDirection(UP);
         }
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) && headDirection != UP)
         {
-            //b.getBoardSnake()->getHeadIndex()->setDirection(DOWN);
-            headDirection = DOWN;
+            b.getBoardSnake()->getHeadIndex()->setDirection(DOWN);
         }
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) && headDirection != RIGHT)
         {
-            //b.getBoardSnake()->getHeadIndex()->setDirection(LEFT);
-            headDirection = LEFT;
+            b.getBoardSnake()->getHeadIndex()->setDirection(LEFT);
         }
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) && headDirection != LEFT)
         {
-            //b.getBoardSnake()->getHeadIndex()->setDirection(RIGHT);
-            headDirection = RIGHT;
+            b.getBoardSnake()->getHeadIndex()->setDirection(RIGHT);
         }
 
         if (headDirection == UP)
