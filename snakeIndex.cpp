@@ -1,9 +1,8 @@
 #include "snakeIndex.hpp"
 
-snakeIndex::snakeIndex(int startIndex, SNAKEDIRECTION startDirection)
+snakeIndex::snakeIndex(int startIndex)
 {
     index = startIndex;
-    direction = startDirection;
 }
 int snakeIndex::getIndex()
 {
@@ -12,12 +11,4 @@ int snakeIndex::getIndex()
 void snakeIndex::setIndex(int newIndex)
 {
     index = newIndex;
-}
-SNAKEDIRECTION snakeIndex::getDirection()
-{
-    return direction;
-}
-void snakeIndex::setDirection(SNAKEDIRECTION newDirection)
-{
-    direction = newDirection;
 }

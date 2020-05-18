@@ -8,10 +8,14 @@ class snake
 {
 private:
     std::shared_ptr<std::vector<std::shared_ptr<snakeIndex>>> snakeIndices = std::make_shared<std::vector<std::shared_ptr<snakeIndex>>>();
+    SNAKEDIRECTION direction;
+
 public:
     snake(int headStartIndex);
     snake();
     std::shared_ptr<std::vector<std::shared_ptr<snakeIndex>>> getSnakeIndices();
     std::shared_ptr<snakeIndex> getHeadIndex();
-    void growSnake(int index, SNAKEDIRECTION direction);
+    void growSnake(int index);
+    SNAKEDIRECTION getDirection();
+    void setDirection(SNAKEDIRECTION newDirection);
 };

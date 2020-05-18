@@ -3,11 +3,8 @@
 class snakeIndex{
     private:
         int index;
-        SNAKEDIRECTION direction;
     public:
-        snakeIndex(int startIndex, SNAKEDIRECTION startDirection);
+        snakeIndex(int startIndex);
         int getIndex();
         void setIndex(int newIndex);
-        SNAKEDIRECTION getDirection();
-        void setDirection(SNAKEDIRECTION newDirection);
 };

@@ -90,7 +90,7 @@ int main()
         {
             b.foodEaten();
             snakeIndex *last = b.getBoardSnake()->getSnakeIndices()->rbegin()->get();
-            b.getBoardSnake()->growSnake(last->getIndex(), STILL);
+            b.getBoardSnake()->growSnake(last->getIndex());
             foodWasEaten = true;
         }
 
@@ -99,24 +99,24 @@ int main()
             window.close();
         }
 
-        SNAKEDIRECTION headDirection = b.getBoardSnake()->getHeadIndex()->getDirection();
+        SNAKEDIRECTION headDirection = b.getBoardSnake()->getDirection();
         int snakeHeadIndex = b.getBoardSnake()->getHeadIndex()->getIndex();
 
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && headDirection != DOWN)
         {
-            b.getBoardSnake()->getHeadIndex()->setDirection(UP);
+            b.getBoardSnake()->setDirection(UP);
         }
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) && headDirection != UP)
         {
-            b.getBoardSnake()->getHeadIndex()->setDirection(DOWN);
+            b.getBoardSnake()->setDirection(DOWN);
         }
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) && headDirection != RIGHT)
         {
-            b.getBoardSnake()->getHeadIndex()->setDirection(LEFT);
+            b.getBoardSnake()->setDirection(LEFT);
         }
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) && headDirection != LEFT)
         {
-            b.getBoardSnake()->getHeadIndex()->setDirection(RIGHT);
+            b.getBoardSnake()->setDirection(RIGHT);
         }
 
         if (headDirection == UP)
