@@ -1,7 +1,7 @@
 #include <iostream> //for testing with cout
 #include "window.hpp"
 
-void updateHeadIndex(int newHeadIndex) 
+void updateHeadIndex(int newHeadIndex)
 {
     for (std::reverse_iterator<std::vector<std::shared_ptr<snakeIndex>>::iterator> i = b.getBoardSnake()->getSnakeIndices()->rbegin();
          i != b.getBoardSnake()->getSnakeIndices()->rend(); i++)
@@ -86,7 +86,20 @@ int main()
             b.spawnFood();
             foodWasEaten = false;
         }
-        if (b.getBoardSnake()->getHeadIndex()->getIndex() == b.getCurrentFoodIndex())
+
+        int snakeHeadIndex = b.getBoardSnake()->getHeadIndex()->getIndex();
+
+        //event that loops through the snakebody and checks if the head index is equal to any of them?
+        for (std::reverse_iterator<std::vector<std::shared_ptr<snakeIndex>>::iterator> i = b.getBoardSnake()->getSnakeIndices()->rbegin();
+             i != b.getBoardSnake()->getSnakeIndices()->rend() - 1; i++)
+        {
+            if(snakeHeadIndex == i->get()->getIndex()){
+                std::cout << "game over";
+                std::cout << "\n";
+            }
+        }
+        
+        if (snakeHeadIndex == b.getCurrentFoodIndex())
         {
             b.foodEaten();
             snakeIndex *last = b.getBoardSnake()->getSnakeIndices()->rbegin()->get();
@@ -100,7 +113,6 @@ int main()
         }
 
         SNAKEDIRECTION headDirection = b.getBoardSnake()->getDirection();
-        int snakeHeadIndex = b.getBoardSnake()->getHeadIndex()->getIndex();
 
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && headDirection != DOWN)
         {
