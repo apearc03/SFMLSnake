@@ -1,47 +1,40 @@
 #include <iostream> //for testing with cout
 #include "window.hpp"
 
-void updateHeadIndex(int newHeadIndex) //needs changing, old index will be the next segment of snake.
+void updateHeadIndex(int newHeadIndex) 
 {
-    //This loops from tail through entire body excluding head. Might need to adjust head separately.
-    for (auto i = b.getBoardSnake()->getSnakeIndices()->rbegin();
-         i != b.getBoardSnake()->getSnakeIndices()->rend(); ++i)
+    for (std::reverse_iterator<std::vector<std::shared_ptr<snakeIndex>>::iterator> i = b.getBoardSnake()->getSnakeIndices()->rbegin();
+         i != b.getBoardSnake()->getSnakeIndices()->rend(); i++)
     {
         if (i == b.getBoardSnake()->getSnakeIndices()->rbegin() && b.getBoardSnake()->getSnakeIndices()->size() == 1)
         {
-            //end of snake.
-            int oldHeadIndex = b.getBoardSnake()->getHeadIndex()->getIndex();
-            // b.getCells().at(oldHeadIndex)->setCellState(EMPTY);
+            //snake size 1
             b.getCells().at(newHeadIndex)->setCellState(SNAKE_HEAD);
+            b.getCells().at(i->get()->getIndex())->setCellState(EMPTY);
             b.getBoardSnake()->getHeadIndex()->setIndex(newHeadIndex);
-            //set new position to new index
-            //set old cell state to EMPTY
         }
         else if (i == b.getBoardSnake()->getSnakeIndices()->rbegin())
         {
-            //end of snake with more than 1 piece.
+            //end of snake
             int nextIndex = (i + 1)->get()->getIndex();
+            b.getCells().at(i->get()->getIndex())->setCellState(EMPTY);
             i->get()->setIndex(nextIndex);
-            //set position to next in line. (i+1)
-            //set old cell state to EMPTY
+            b.getCells().at(i->get()->getIndex())->setCellState(SNAKE_BODY);
         }
         else if (i == b.getBoardSnake()->getSnakeIndices()->rend() - 1)
         {
             //start of snake.
             b.getCells().at(newHeadIndex)->setCellState(SNAKE_HEAD);
             b.getBoardSnake()->getHeadIndex()->setIndex(newHeadIndex);
-            //set position to new index
         }
         else
         {
             //middle segment
             int nextIndex = (i + 1)->get()->getIndex();
             i->get()->setIndex(nextIndex);
-            //set position to next in line. (i+1)
+            b.getCells().at(i->get()->getIndex())->setCellState(SNAKE_BODY);
         }
     }
-                std::cout << b.getBoardSnake()->getSnakeIndices()->size(); //crashes when snake is length 16
-                std::cout << "\n";
 }
 
 void initEdgeCells()
@@ -77,6 +70,7 @@ int main()
     initEdgeCells();
     b.spawnFood();
     bool foodWasEaten = false;
+    SNAKEDIRECTION headDirection = STILL;
     while (window.isOpen())
     {
         sf::Event event;
@@ -107,24 +101,27 @@ int main()
             window.close();
         }
 
-        SNAKEDIRECTION headDirection = b.getBoardSnake()->getHeadIndex()->getDirection(); //add method to snake to get head index
         int snakeHeadIndex = b.getBoardSnake()->getHeadIndex()->getIndex();
 
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && headDirection != DOWN)
         {
-            b.getBoardSnake()->getHeadIndex()->setDirection(UP);
+            //b.getBoardSnake()->getHeadIndex()->setDirection(UP);
+            headDirection = UP;
         }
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) && headDirection != UP)
         {
-            b.getBoardSnake()->getHeadIndex()->setDirection(DOWN);
+            //b.getBoardSnake()->getHeadIndex()->setDirection(DOWN);
+            headDirection = DOWN;
         }
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) && headDirection != RIGHT)
         {
-            b.getBoardSnake()->getHeadIndex()->setDirection(LEFT);
+            //b.getBoardSnake()->getHeadIndex()->setDirection(LEFT);
+            headDirection = LEFT;
         }
         if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) && headDirection != LEFT)
         {
-            b.getBoardSnake()->getHeadIndex()->setDirection(RIGHT);
+            //b.getBoardSnake()->getHeadIndex()->setDirection(RIGHT);
+            headDirection = RIGHT;
         }
 
         if (headDirection == UP)
