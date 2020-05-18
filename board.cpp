@@ -35,16 +35,15 @@ int board::getCurrentFoodIndex()
 
 void board::spawnFood()
 {
-    //FLOATING POINT EXCEPTION BUG HERE.
     std::vector<int> possibleCells;
     for (int i = 0; i < (int)cells.size(); i++)
     {
-        //loop through all cells and add to possibleCells if the cell index doesnt contain snake head or body.
         if (cells.at(i)->getCellState() != SNAKE_HEAD && cells.at(i)->getCellState() != SNAKE_BODY)
         {
             possibleCells.push_back(i);
         }
     }
+    //Need a check here, if the possible cells is zero then the user has won the game.
     int randomPossibleIndex = rand() % possibleCells.size();
     int newFoodIndex = possibleCells.at(randomPossibleIndex);
     cells.at(newFoodIndex)->setCellState(FOOD);
