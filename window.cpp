@@ -68,8 +68,7 @@ int main()
 
     srand(time(0));
     initEdgeCells();
-    b.spawnFood();
-    bool foodWasEaten = false;
+    bool foodWasEaten = true;
     while (window.isOpen())
     {
         sf::Event event;
@@ -93,6 +92,8 @@ int main()
         for (std::reverse_iterator<std::vector<std::shared_ptr<snakeIndex>>::iterator> i = b.getBoardSnake()->getSnakeIndices()->rbegin();
              i != b.getBoardSnake()->getSnakeIndices()->rend() - 1; i++)
         {
+            //reset board
+            //show the previous score until the player moves again and direction is not still.
             if(snakeHeadIndex == i->get()->getIndex()){
                 std::cout << "game over";
                 std::cout << "\n";
