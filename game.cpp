@@ -1,5 +1,5 @@
 #include <iostream> //for testing with cout
-#include "window.hpp"
+#include "game.hpp"
 
 void updateHeadIndex(int newHeadIndex)
 {

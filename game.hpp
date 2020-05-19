@@ -5,7 +5,7 @@
 #include <vector>
 
 const int windowWidth = 900;
-const int windowHeight = 900; //config file to contain width, height, cellsize and framerate.
+const int windowHeight = 900; //command line arguments to set width, height, cellsize and framerate.
 const int cellSize = 90;
 const int columnCount = windowHeight / cellSize; //used to calculate the next horizontal cell
 const int rowCount = windowWidth / cellSize;

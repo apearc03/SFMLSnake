@@ -25,7 +25,7 @@ void board::spawnFood()
             possibleCells.push_back(i);
         }
     }
-    //Need a check here, if the possible cells is zero then the user has won the game.
+    //Need a check here, if the possible cells is zero then the user has won the game. Reset game and add text that the user has won with their score.
     int randomPossibleIndex = rand() % possibleCells.size();
     int newFoodIndex = possibleCells.at(randomPossibleIndex);
     cells.at(newFoodIndex)->setCellState(FOOD);
