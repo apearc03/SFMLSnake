@@ -2,25 +2,7 @@
 
 board::board(int windowWidth, int windowHeight, int cellSize)
 {
-
-    const int halfWidth = (windowWidth / cellSize) / 2;
-    const int halfHeight = (windowHeight / cellSize) / 2;
-
-    for (int i = 0, w = 0; i < windowWidth; i += cellSize, w++)
-    {
-        for (int j = 0, h = 0; j < windowHeight; j += cellSize, h++)
-        {
-            std::shared_ptr<cell> c(new cell(sf::Vector2f(i, j), sf::Vector2f(i + cellSize, j), sf::Vector2f(i + cellSize, j + cellSize), sf::Vector2f(i, j + cellSize)));
-
-            if (w == halfWidth && h == halfHeight)
-            {
-                c->setCellState(SNAKE_HEAD); 
-                boardSnake.reset(new snake(cells.size()));
-            }
-            cells.push_back(c);
-   
-        }
-    }
+    resetBoard(windowWidth, windowHeight, cellSize);
 }
 
 std::vector<std::shared_ptr<cell>> board::getCells()
@@ -61,6 +43,29 @@ std::shared_ptr<snake> board::getBoardSnake()
     return boardSnake;
 }
 
-int board::getScore(){
+int board::getScore()
+{
     return score;
 };
+
+void board::resetBoard(int windowWidth, int windowHeight, int cellSize)
+{
+    cells.clear();
+    const int halfWidth = (windowWidth / cellSize) / 2;
+    const int halfHeight = (windowHeight / cellSize) / 2;
+
+    for (int i = 0, w = 0; i < windowWidth; i += cellSize, w++)
+    {
+        for (int j = 0, h = 0; j < windowHeight; j += cellSize, h++)
+        {
+            std::shared_ptr<cell> c(new cell(sf::Vector2f(i, j), sf::Vector2f(i + cellSize, j), sf::Vector2f(i + cellSize, j + cellSize), sf::Vector2f(i, j + cellSize)));
+
+            if (w == halfWidth && h == halfHeight)
+            {
+                c->setCellState(SNAKE_HEAD);
+                boardSnake.reset(new snake(cells.size()));
+            }
+            cells.push_back(c);
+        }
+    }
+}

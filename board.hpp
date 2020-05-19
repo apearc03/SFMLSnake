@@ -20,4 +20,5 @@ class board
         void foodEaten();
         std::shared_ptr<snake> getBoardSnake();
         int getScore();
+        void resetBoard(int windowWidth, int windowHeight, int cellSize);
 };
