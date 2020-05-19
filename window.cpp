@@ -89,7 +89,7 @@ int main()
 
         int snakeHeadIndex = b.getBoardSnake()->getHeadIndex()->getIndex();
 
-        //event that loops through the snakebody and checks if the head index is equal to any of them?
+        //event that loops through the snakebody and checks if the head index is equal to any of them
         std::reverse_iterator<std::vector<std::shared_ptr<snakeIndex>>::iterator> i = b.getBoardSnake()->getSnakeIndices()->rbegin();
         while (i != b.getBoardSnake()->getSnakeIndices()->rend() - 1 && !gameOver)
         {
