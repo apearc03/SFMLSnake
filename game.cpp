@@ -1,7 +1,7 @@
 #include <iostream> //for testing with cout
 #include "game.hpp"
 
-void updateHeadIndex(int newHeadIndex)
+void updateSnakePosition(int newHeadIndex)
 {
     for (std::reverse_iterator<std::vector<std::shared_ptr<snakeIndex>>::iterator> i = b.getBoardSnake()->getSnakeIndices()->rbegin();
          i != b.getBoardSnake()->getSnakeIndices()->rend(); i++)
@@ -60,6 +60,32 @@ void initEdgeCells()
     }
 }
 
+void setUpFont()
+{
+    font.loadFromFile("fonts/OpenSans-Bold.ttf");
+
+    text.setFont(font); // font is a sf::Font
+
+    // set the character size
+    text.setCharacterSize(30); // in pixels, not points!
+
+    // set the color
+    text.setFillColor(sf::Color::White);
+    text.setOutlineColor(sf::Color::Blue);
+
+    text.setPosition(windowWidth / 2, windowHeight / 2 - windowHeight / 4);
+}
+
+void reset()
+{
+    text.setString("You\nscored\n" + std::to_string(b.getScore()) + "\npoints");
+    b.resetBoard(windowWidth, windowHeight, cellSize);
+    gameOver = false;
+    b.spawnFood();
+    foodWasEaten = false;
+    drawScore = true;
+}
+
 int main()
 {
     window.setPosition(sf::Vector2i(screenWidth / 2, screenHeight / 2));
@@ -68,6 +94,7 @@ int main()
 
     srand(time(0));
     initEdgeCells();
+    setUpFont();
     while (window.isOpen())
     {
         sf::Event event;
@@ -98,12 +125,14 @@ int main()
             i++;
         }
 
+        if (b.getBoardSnake()->getDirection() != STILL)
+        {
+            drawScore = false;
+        }
+
         if (gameOver)
         {
-            b.resetBoard(windowWidth, windowHeight, cellSize);
-            gameOver = false;
-            b.spawnFood();
-            foodWasEaten = false;
+            reset();
         }
 
         if (snakeHeadIndex == b.getCurrentFoodIndex())
@@ -145,13 +174,13 @@ int main()
             {
                 if (snakeHeadIndex == topRow[i])
                 {
-                    updateHeadIndex(bottomRow[i]);
+                    updateSnakePosition(bottomRow[i]);
                     edgeCell = true;
                 }
             }
             if (!edgeCell)
             {
-                updateHeadIndex(snakeHeadIndex - 1);
+                updateSnakePosition(snakeHeadIndex - 1);
             }
         }
 
@@ -162,13 +191,13 @@ int main()
             {
                 if (snakeHeadIndex == bottomRow[i])
                 {
-                    updateHeadIndex(topRow[i]);
+                    updateSnakePosition(topRow[i]);
                     edgeCell = true;
                 }
             }
             if (!edgeCell)
             {
-                updateHeadIndex(snakeHeadIndex + 1);
+                updateSnakePosition(snakeHeadIndex + 1);
             }
         }
 
@@ -179,13 +208,13 @@ int main()
             {
                 if (snakeHeadIndex == leftCol[i])
                 {
-                    updateHeadIndex(rightCol[i]);
+                    updateSnakePosition(rightCol[i]);
                     edgeCell = true;
                 }
             }
             if (!edgeCell)
             {
-                updateHeadIndex(snakeHeadIndex - columnCount);
+                updateSnakePosition(snakeHeadIndex - columnCount);
             }
         }
 
@@ -196,13 +225,13 @@ int main()
             {
                 if (snakeHeadIndex == rightCol[i])
                 {
-                    updateHeadIndex(leftCol[i]);
+                    updateSnakePosition(leftCol[i]);
                     edgeCell = true;
                 }
             }
             if (!edgeCell)
             {
-                updateHeadIndex(snakeHeadIndex + columnCount);
+                updateSnakePosition(snakeHeadIndex + columnCount);
             }
         }
 
@@ -213,6 +242,10 @@ int main()
             window.draw(b.getCells().at(s->getIndex())->getQuad());
         }
         window.draw(b.getCells().at(b.getCurrentFoodIndex())->getQuad());
+        if (drawScore)
+        {
+            window.draw(text);
+        }
         window.display();
     }
 

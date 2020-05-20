@@ -3,6 +3,7 @@
 #include "board.hpp"
 #include "snakeDirection.hpp"
 #include <vector>
+#include <string>
 
 const int windowWidth = 900;
 const int windowHeight = 900; //command line arguments to set width, height, cellsize and framerate.
@@ -17,6 +18,8 @@ int leftCol[columnCount];
 int rightCol[columnCount];
 bool foodWasEaten = true;
 bool gameOver = false;
-
+bool drawScore = false;
+sf::Font font;
+sf::Text text;
 sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Snake");
 board b = board(windowWidth, windowHeight, cellSize);
