@@ -15,6 +15,8 @@ int topRow[rowCount];
 int bottomRow[rowCount];
 int leftCol[columnCount];
 int rightCol[columnCount];
+bool foodWasEaten = true;
+bool gameOver = false;
 
 sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Snake");
 board b = board(windowWidth, windowHeight, cellSize);

@@ -68,8 +68,6 @@ int main()
 
     srand(time(0));
     initEdgeCells();
-    bool foodWasEaten = true;
-    bool gameOver = false;
     while (window.isOpen())
     {
         sf::Event event;

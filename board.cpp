@@ -51,6 +51,7 @@ int board::getScore()
 void board::resetBoard(int windowWidth, int windowHeight, int cellSize)
 {
     cells.clear();
+    score = 0;
     const int halfWidth = (windowWidth / cellSize) / 2;
     const int halfHeight = (windowHeight / cellSize) / 2;
 
