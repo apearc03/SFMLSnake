@@ -7,7 +7,7 @@
 
 const int windowWidth = 1000;
 const int windowHeight = 1000; //command line arguments to set width, height, cellsize and framerate.
-const int cellSize = 100; //has to be less than both width and height and be a factor.
+const int cellSize = 100; //has to be less than both width and height and be a factor of both. Frame rate should be any number between 10 - 60.
 const int columnCount = windowHeight / cellSize; //used to calculate the next horizontal cell
 const int rowCount = windowWidth / cellSize;
 const int screenWidth = sf::VideoMode::getDesktopMode().width - windowWidth;
