@@ -1,4 +1,3 @@
-#include <iostream> //for testing with cout
 #include "game.hpp"
 
 void updateSnakePosition(int newHeadIndex)
@@ -63,27 +62,22 @@ void initEdgeCells()
 void setUpFont()
 {
     font.loadFromFile("fonts/OpenSans-Bold.ttf");
-
-    text.setFont(font); // font is a sf::Font
-
-    // set the character size
-    text.setCharacterSize(30); // in pixels, not points!
-
-    // set the color
-    text.setFillColor(sf::Color::White);
+    text.setFont(font);
+    text.setCharacterSize(25);
+    text.setFillColor(sf::Color::Cyan);
     text.setOutlineColor(sf::Color::Blue);
-
     text.setPosition(windowWidth / 2, windowHeight / 2 - windowHeight / 4);
 }
 
-void reset()
+void reset(std::string message)
 {
-    text.setString("You\nscored\n" + std::to_string(b.getScore()) + "\npoints");
+    text.setString(message);
+    drawScore = true;
     b.resetBoard(windowWidth, windowHeight, cellSize);
     gameOver = false;
-    b.spawnFood();
+    b.updatePossibleCells();
+    b.spawnFood(); 
     foodWasEaten = false;
-    drawScore = true;
 }
 
 int main()
@@ -108,8 +102,16 @@ int main()
 
         if (foodWasEaten)
         {
-            b.spawnFood();
-            foodWasEaten = false;
+            b.updatePossibleCells();
+            if (b.userHasWon())
+            {
+                reset("You\nscored\n" + std::to_string(b.getScore()) + "\npoint(s).\nThe maximum.");
+            }
+            else
+            {
+                b.spawnFood();
+                foodWasEaten = false;
+            }
         }
 
         int snakeHeadIndex = b.getBoardSnake()->getHeadIndex()->getIndex();
@@ -132,7 +134,7 @@ int main()
 
         if (gameOver)
         {
-            reset();
+            reset("You\nscored\n" + std::to_string(b.getScore()) + "\npoint(s)");
         }
 
         if (snakeHeadIndex == b.getCurrentFoodIndex())

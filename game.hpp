@@ -5,9 +5,9 @@
 #include <vector>
 #include <string>
 
-const int windowWidth = 900;
-const int windowHeight = 900; //command line arguments to set width, height, cellsize and framerate.
-const int cellSize = 90;
+const int windowWidth = 1000;
+const int windowHeight = 1000; //command line arguments to set width, height, cellsize and framerate.
+const int cellSize = 100; //has to be less than both width and height and be a factor.
 const int columnCount = windowHeight / cellSize; //used to calculate the next horizontal cell
 const int rowCount = windowWidth / cellSize;
 const int screenWidth = sf::VideoMode::getDesktopMode().width - windowWidth;

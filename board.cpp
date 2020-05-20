@@ -15,9 +15,14 @@ int board::getCurrentFoodIndex()
     return currentFoodIndex;
 }
 
-void board::spawnFood()
+bool board::userHasWon()
 {
-    std::vector<int> possibleCells;
+    return possibleCells.size() == 0;
+}
+
+void board::updatePossibleCells()
+{
+    possibleCells.clear();
     for (int i = 0; i < (int)cells.size(); i++)
     {
         if (cells.at(i)->getCellState() != SNAKE_HEAD && cells.at(i)->getCellState() != SNAKE_BODY)
@@ -25,7 +30,10 @@ void board::spawnFood()
             possibleCells.push_back(i);
         }
     }
-    //Need a check here, if the possible cells is zero then the user has won the game. Reset game and add text that the user has won with their score.
+}
+
+void board::spawnFood()
+{
     int randomPossibleIndex = rand() % possibleCells.size();
     int newFoodIndex = possibleCells.at(randomPossibleIndex);
     cells.at(newFoodIndex)->setCellState(FOOD);
