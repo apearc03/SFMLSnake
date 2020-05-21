@@ -76,7 +76,7 @@ void reset(std::string message)
     b.resetBoard(windowWidth, windowHeight, cellSize);
     gameOver = false;
     b.updatePossibleCells();
-    b.spawnFood(); 
+    b.spawnFood();
     foodWasEaten = false;
 }
 
@@ -238,12 +238,11 @@ int main()
         }
 
         window.clear();
-        //add game state and render different things on screen? Way to reset board, show score after game end.
+        window.draw(b.getCells().at(b.getCurrentFoodIndex())->getQuad());
         for (std::shared_ptr<snakeIndex> s : *b.getBoardSnake()->getSnakeIndices())
         {
             window.draw(b.getCells().at(s->getIndex())->getQuad());
         }
-        window.draw(b.getCells().at(b.getCurrentFoodIndex())->getQuad());
         if (drawScore)
         {
             window.draw(text);
