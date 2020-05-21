@@ -1,6 +1,33 @@
 #include "game.hpp"
 
-void updateSnakePosition(int newHeadIndex)
+game::game(int windowW, int windowH, int cellS) : b(windowW, windowH, cellS){
+    windowWidth = windowW;
+    windowHeight = windowH;                   //command line arguments to set width, height, cellsize and framerate.
+    cellSize = cellS;                        //has to be less than both width and height and be a factor of both. Frame rate should be any number between 10 - 60.
+    columnCount = windowHeight / cellSize; //used to calculate the next horizontal cell
+    rowCount = windowWidth / cellSize;
+    screenWidth = sf::VideoMode::getDesktopMode().width - windowWidth;
+    screenHeight = sf::VideoMode::getDesktopMode().height - windowHeight;
+    topRow = new int[rowCount];
+    bottomRow = new int[rowCount];
+    leftCol = new int[columnCount];
+    rightCol = new int[columnCount];
+    foodWasEaten = true;
+    gameOver = false;
+    drawScore = false;
+    w.create(sf::VideoMode(windowW, windowH), "Snake");
+    //b = board(windowWidth, windowHeight, cellSize);
+    //put all this code into a function and move main into a new file? Have the command line stuff in there?
+    w.setPosition(sf::Vector2i(screenWidth / 2, screenHeight / 2));
+    w.setVerticalSyncEnabled(true);
+    w.setFramerateLimit(10);
+
+    srand(time(0));
+    initEdgeCells();
+    setUpFont();
+}
+
+void game::updateSnakePosition(int newHeadIndex)
 {
     for (std::reverse_iterator<std::vector<std::shared_ptr<snakeIndex>>::iterator> i = b.getBoardSnake()->getSnakeIndices()->rbegin();
          i != b.getBoardSnake()->getSnakeIndices()->rend(); i++)
@@ -36,7 +63,7 @@ void updateSnakePosition(int newHeadIndex)
     }
 }
 
-void initEdgeCells()
+void game::initEdgeCells()
 {
     for (int i = 0; i < rowCount; i++)
     {
@@ -59,7 +86,7 @@ void initEdgeCells()
     }
 }
 
-void setUpFont()
+void game::setUpFont()
 {
     font.loadFromFile("fonts/OpenSans-Bold.ttf");
     text.setFont(font);
@@ -69,7 +96,7 @@ void setUpFont()
     text.setPosition(windowWidth / 2, windowHeight / 2 - windowHeight / 4);
 }
 
-void reset(std::string message)
+void game::reset(std::string message)
 {
     text.setString(message);
     drawScore = true;
@@ -80,23 +107,16 @@ void reset(std::string message)
     foodWasEaten = false;
 }
 
-int main()
+void game::start()
 {
-    window.setPosition(sf::Vector2i(screenWidth / 2, screenHeight / 2));
-    window.setVerticalSyncEnabled(true);
-    window.setFramerateLimit(10);
-
-    srand(time(0));
-    initEdgeCells();
-    setUpFont();
-    while (window.isOpen())
+    while (w.isOpen())
     {
         sf::Event event;
-        while (window.pollEvent(event))
+        while (w.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
             {
-                window.close();
+                w.close();
             }
         }
 
@@ -147,7 +167,7 @@ int main()
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
-            window.close();
+            w.close();
         }
 
         SNAKEDIRECTION headDirection = b.getBoardSnake()->getDirection();
@@ -237,18 +257,16 @@ int main()
             }
         }
 
-        window.clear();
-        window.draw(b.getCells().at(b.getCurrentFoodIndex())->getQuad());
+        w.clear();
+        w.draw(b.getCells().at(b.getCurrentFoodIndex())->getQuad());
         for (std::shared_ptr<snakeIndex> s : *b.getBoardSnake()->getSnakeIndices())
         {
-            window.draw(b.getCells().at(s->getIndex())->getQuad());
+            w.draw(b.getCells().at(s->getIndex())->getQuad());
         }
         if (drawScore)
         {
-            window.draw(text);
+            w.draw(text);
         }
-        window.display();
+        w.display();
     }
-
-    return 0;
 }
