@@ -2,9 +2,9 @@
 
 game::game(int windowW, int windowH, int cellS, int frameRate) : b(windowW, windowH, cellS){
     windowWidth = windowW;
-    windowHeight = windowH;                   //command line arguments to set width, height, cellsize and framerate.
-    cellSize = cellS;                        //has to be less than both width and height and be a factor of both. Frame rate should be any number between 10 - 60.
-    columnCount = windowHeight / cellSize; //used to calculate the next horizontal cell
+    windowHeight = windowH;
+    cellSize = cellS;     
+    columnCount = windowHeight / cellSize; 
     rowCount = windowWidth / cellSize;
     screenWidth = sf::VideoMode::getDesktopMode().width - windowWidth;
     screenHeight = sf::VideoMode::getDesktopMode().height - windowHeight;
@@ -16,8 +16,6 @@ game::game(int windowW, int windowH, int cellS, int frameRate) : b(windowW, wind
     gameOver = false;
     drawScore = false;
     w.create(sf::VideoMode(windowW, windowH), "Snake");
-    //b = board(windowWidth, windowHeight, cellSize);
-    //put all this code into a function and move main into a new file? Have the command line stuff in there?
     w.setPosition(sf::Vector2i(screenWidth / 2, screenHeight / 2));
     w.setVerticalSyncEnabled(true);
     w.setFramerateLimit(frameRate);
