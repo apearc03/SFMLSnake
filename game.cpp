@@ -1,6 +1,6 @@
 #include "game.hpp"
 
-game::game(int windowW, int windowH, int cellS) : b(windowW, windowH, cellS){
+game::game(int windowW, int windowH, int cellS, int frameRate) : b(windowW, windowH, cellS){
     windowWidth = windowW;
     windowHeight = windowH;                   //command line arguments to set width, height, cellsize and framerate.
     cellSize = cellS;                        //has to be less than both width and height and be a factor of both. Frame rate should be any number between 10 - 60.
@@ -20,7 +20,7 @@ game::game(int windowW, int windowH, int cellS) : b(windowW, windowH, cellS){
     //put all this code into a function and move main into a new file? Have the command line stuff in there?
     w.setPosition(sf::Vector2i(screenWidth / 2, screenHeight / 2));
     w.setVerticalSyncEnabled(true);
-    w.setFramerateLimit(10);
+    w.setFramerateLimit(frameRate);
 
     srand(time(0));
     initEdgeCells();

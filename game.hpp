@@ -33,6 +33,6 @@ private:
     void reset(std::string message);
 
 public:
-    game(int windowW, int windowH, int cellS);
+    game(int windowW, int windowH, int cellS, int frameRate);
     void start();
 };
