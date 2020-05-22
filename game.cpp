@@ -15,7 +15,7 @@ game::game(int windowW, int windowH, int cellS, int frameRate) : b(windowW, wind
     foodWasEaten = true;
     gameOver = false;
     drawScore = false;
-    w.create(sf::VideoMode(windowW, windowH), "Snake");
+    w.create(sf::VideoMode(windowW, windowH), "SFMLSnake");
     w.setPosition(sf::Vector2i(screenWidth / 2, screenHeight / 2));
     w.setVerticalSyncEnabled(true);
     w.setFramerateLimit(frameRate);
