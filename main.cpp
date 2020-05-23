@@ -1,4 +1,4 @@
-#include "game.hpp"
+#include "src/game.hpp"
 #include <iostream>
 #include <string>
 #include <regex>
