@@ -1,5 +1,4 @@
 *.o
-*-app
 CMakeCache.txt
 CMakeFiles/
 Makefile
