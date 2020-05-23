@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     "cellSize: An integer that must be a factor of both windowWidth and windowHeight\n"
     "frameRate: An integer that must be between 10 and 60, inclusive of both.\n"
     "frameRate determines the amount of updates per second for each cell. The snake moves faster, the higher the frame rate.\n"
-    "Default values are 1000, 800, 50, 15.\n"
+    "Default values are 1000, 800, 50, 20.\n"
     "Your score is shown after each round ends.\n"
     "Controls are either W S A D or UP DOWN LEFT RIGHT to move. ESC to exit.\n";
     if (argc == 1)
