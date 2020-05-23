@@ -1,2 +1,7 @@
 *.o
 *-app
+CMakeCache.txt
+CMakeFiles/
+Makefile
+SFMLSnake
+cmake_install.cmake
