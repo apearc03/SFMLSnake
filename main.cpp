@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     "Controls are either W S A D or UP DOWN LEFT RIGHT to move. ESC to exit.\n";
     if (argc == 1)
     {
-        game g(1000, 800, 50, 15);
+        game g(1000, 800, 50, 20);
         g.start();
         return 0;
     }
