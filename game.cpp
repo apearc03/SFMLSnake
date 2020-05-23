@@ -1,10 +1,11 @@
 #include "game.hpp"
 
-game::game(int windowW, int windowH, int cellS, int frameRate) : b(windowW, windowH, cellS){
+game::game(int windowW, int windowH, int cellS, int frameRate) : b(windowW, windowH, cellS)
+{
     windowWidth = windowW;
     windowHeight = windowH;
-    cellSize = cellS;     
-    columnCount = windowHeight / cellSize; 
+    cellSize = cellS;
+    columnCount = windowHeight / cellSize;
     rowCount = windowWidth / cellSize;
     screenWidth = sf::VideoMode::getDesktopMode().width - windowWidth;
     screenHeight = sf::VideoMode::getDesktopMode().height - windowHeight;
@@ -17,7 +18,6 @@ game::game(int windowW, int windowH, int cellS, int frameRate) : b(windowW, wind
     drawScore = false;
     w.create(sf::VideoMode(windowW, windowH), "SFMLSnake");
     w.setPosition(sf::Vector2i(screenWidth / 2, screenHeight / 2));
-    w.setVerticalSyncEnabled(true);
     w.setFramerateLimit(frameRate);
 
     srand(time(0));
@@ -109,14 +109,6 @@ void game::start()
 {
     while (w.isOpen())
     {
-        sf::Event event;
-        while (w.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                w.close();
-            }
-        }
 
         if (foodWasEaten)
         {
@@ -163,28 +155,39 @@ void game::start()
             foodWasEaten = true;
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-        {
-            w.close();
-        }
-
         SNAKEDIRECTION headDirection = b.getBoardSnake()->getDirection();
+        sf::Event event;
+        while (w.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                w.close();
+            }
 
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && headDirection != DOWN)
-        {
-            b.getBoardSnake()->setDirection(UP);
-        }
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) && headDirection != UP)
-        {
-            b.getBoardSnake()->setDirection(DOWN);
-        }
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) && headDirection != RIGHT)
-        {
-            b.getBoardSnake()->setDirection(LEFT);
-        }
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) && headDirection != LEFT)
-        {
-            b.getBoardSnake()->setDirection(RIGHT);
+            if (event.type == sf::Event::KeyPressed)
+            {
+                if (event.key.code == sf::Keyboard::Escape)
+                {
+                    w.close();
+                }
+
+                if ((event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up) && headDirection != DOWN)
+                {
+                    b.getBoardSnake()->setDirection(UP);
+                }
+                if ((event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) && headDirection != UP)
+                {
+                    b.getBoardSnake()->setDirection(DOWN);
+                }
+                if ((event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Left) && headDirection != RIGHT)
+                {
+                    b.getBoardSnake()->setDirection(LEFT);
+                }
+                if ((event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right) && headDirection != LEFT)
+                {
+                    b.getBoardSnake()->setDirection(RIGHT);
+                }
+            }
         }
 
         if (headDirection == UP)
