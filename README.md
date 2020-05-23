@@ -48,10 +48,14 @@ g++ main.cpp src/*.cpp -o SFMLSnake -lsfml-graphics -lsfml-window -lsfml-system
 ```
 # Controls
 
-Move up - W or UP 
+Move up - W or UP
+
 Move down - S or DOWN
+
 Move left - A or LEFT
+
 Move right - D or RIGHT
+
 Exit - ESC
 
 # Command line options
