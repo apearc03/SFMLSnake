@@ -58,6 +58,7 @@ void game::updateSnakePosition(int newHeadIndex)
             i->get()->setIndex(nextIndex);
             b.getCells().at(i->get()->getIndex())->setCellState(SNAKE_BODY);
         }
+        w.draw(b.getCells().at(i->get()->getIndex())->getQuad());
     }
 }
 
@@ -109,7 +110,6 @@ void game::start()
 {
     while (w.isOpen())
     {
-
         if (foodWasEaten)
         {
             b.updatePossibleCells();
@@ -189,6 +189,12 @@ void game::start()
                 }
             }
         }
+        
+        w.clear();
+        if (headDirection == STILL)
+        {
+            w.draw(b.getCells().at(snakeHeadIndex)->getQuad());
+        }
 
         if (headDirection == UP)
         {
@@ -258,12 +264,7 @@ void game::start()
             }
         }
 
-        w.clear();
         w.draw(b.getCells().at(b.getCurrentFoodIndex())->getQuad());
-        for (std::shared_ptr<snakeIndex> s : *b.getBoardSnake()->getSnakeIndices())
-        {
-            w.draw(b.getCells().at(s->getIndex())->getQuad());
-        }
         if (drawScore)
         {
             w.draw(text);
